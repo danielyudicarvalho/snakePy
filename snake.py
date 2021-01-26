@@ -54,14 +54,18 @@ class Snake:
 
   def colision_fruit(self,fruit):
       return self.body[0] == fruit.position
+
+  def auto_colision(self):
+    head = self.body[0]
+    return if head in self.body[1:]
   
-  def colisio_wall(self):
+  def colision_wall(self):
       head = self.body[0]
 
       x = head[0]
       y = head[1]
 
-      return if x<0 or y<0 or x>490 or x>490:
+      return if x<0 or y<0 or x>490 or x>490
 
 
 
@@ -94,6 +98,9 @@ while True:
     if snake.colision_fruit(fruits):
       snake.eat()
       fruits = Fruit()
+    
+    if snake.colision_wall():
+      snake = Snake()
     
 
 
