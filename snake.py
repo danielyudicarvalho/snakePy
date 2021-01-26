@@ -1,16 +1,6 @@
 import pygame
 import random
 
-pygame.init()
-
-resolution = (500,500)
-screen = pygame.display.set_mode(resolution)
-
-clock = pygame.time.Clock()
-black = (0,1,2)
-screen.fill(black)
-pygame.display.update()
-
 
 class Fruit:
   color = (255,0,0)
@@ -22,6 +12,16 @@ class Fruit:
     x = random.randint(0,49) * 10
     y = random.randint(0,49) * 10
     self.position = (x,y)
+
+  @staticmethod
+  def create_fruit():
+    x = random.randint(0,49) * 10
+    y = random.randint(0,49) * 10
+
+    if(x,y) in snake.body:
+        Fruit.create_fruit()
+    else:
+      return (x,y)
 
 class Snake:
   color = (255,255,255)
@@ -73,41 +73,53 @@ class Snake:
   def eat(self):
       self.body.append(0,0)
       self.score += 1
+      pygame.display.set_caption("Snake | Score: {}".format(self.score))
 
-   
+if __name__ = "__main__":
 
-fruits = Fruit()
-snake = Snake()
+    pygame.init()
 
-while True:
+    resolution = (500,500)
+    screen = pygame.display.set_mode(resolution)
+    pygame.display.set_caption("Snake")
 
-  clock.tick(30)
+    clock = pygame.time.Clock()
+    black = (0,1,2)
+    screen.fill(black)
+    pygame.display.update()
 
-  for event in pygame.event.get():
+    fruits = Fruit()
+    snake = Snake()
 
-    if event.type == pygame.QUIT:
-      exit()
-    elif event.type == pygame.KEYDOWN:
-      if event.type == pygame.K_UP:
-        snake.direction == "up"
-      if event.type == pygame.K_DOWN:
-        snake.direction == "down"
-      if event.type == pygame.K_RIGHT:
-        snake.direction == "right"
-      if event.type == pygame.K_LEFT:
-        snake.direction == "left"
+    while True:
 
-    if snake.colision_fruit(fruits):
-      snake.eat()
-      fruits = Fruit()
-    
-    if snake.colision_wall():
-      snake = Snake()
-    
+      clock.tick(30)
+
+      for event in pygame.event.get():
+
+        if event.type == pygame.QUIT:
+          exit()
+        elif event.type == pygame.KEYDOWN:
+          if event.type == pygame.K_UP:
+            snake.direction == "up"
+          if event.type == pygame.K_DOWN:
+            snake.direction == "down"
+          if event.type == pygame.K_RIGHT:
+            snake.direction == "right"
+          if event.type == pygame.K_LEFT:
+            snake.direction == "left"
+
+        if snake.colision_fruit(fruits):
+          snake.eat()
+          fruits = Fruit()
+        
+        if snake.colision_wall():
+          snake = Snake()
+        
 
 
-  screen.blit(fruits.texture, fruits.position)
-  
-  for position in snake.body:
-    screen.blit(snake.texture,position)
-  pygame.display.update()
+      screen.blit(fruits.texture, fruits.position)
+      
+      for position in snake.body:
+        screen.blit(snake.texture,position)
+      pygame.display.update()
