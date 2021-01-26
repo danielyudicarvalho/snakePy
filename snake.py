@@ -27,6 +27,7 @@ class Snake:
   color = (255,255,255)
   size = {10,10}
   velocity = 10
+  score = 0;
 
   def __init__(self):
     self.texture = pygame.Surface(self.size)
@@ -52,14 +53,14 @@ class Snake:
 
     self.body.pop(-1)
 
-  def colision_fruit(self,fruit):
+  def collision_fruit(self,fruit):
       return self.body[0] == fruit.position
 
-  def auto_colision(self):
+  def auto_collision(self):
     head = self.body[0]
     return if head in self.body[1:]
   
-  def colision_wall(self):
+  def collision_wall(self):
       head = self.body[0]
 
       x = head[0]
@@ -71,6 +72,7 @@ class Snake:
 
   def eat(self):
       self.body.append(0,0)
+      self.score += 1
 
    
 
